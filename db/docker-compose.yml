@@ -1,0 +1,15 @@
+services:
+  db:
+    image: postgres
+    container_name: CONTAINER_NAME_2025
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydatabase
+    volumes:
+      - CONTAINER_pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  CONTAINER_pgdata:
