@@ -15,13 +15,15 @@ datasource db {
 }
 
 model User {
-  id            String    @id
+  id            String      @id
   name          String
   email         String
   emailVerified Boolean
   image         String?
   createdAt     DateTime
   updatedAt     DateTime
+  memberCardId  String?     @unique @db.Uuid
+  memberCard    MemberCard? @relation(fields: [memberCardId], references: [id], onDelete: SetNull)
   sessions      Session[]
   accounts      Account[]
 
@@ -72,4 +74,37 @@ model Verification {
   updatedAt  DateTime?
 
   @@map("verification")
+}
+
+model Loan {
+  id       String   @id
+  userId   String
+  BookId   String
+  loanDate DateTime
+}
+
+model Author {
+  id    String @id
+  name  String
+  books Book[]
+}
+
+model Book {
+  id       String @id
+  genre    String
+  authorId String
+  author   Author @relation(fields: [authorId], references: [id])
+}
+
+enum StatusCard {
+  FREE
+  IN_USE
+  ARCHIVED
+}
+
+model MemberCard {
+  id     String     @id @default(uuid()) @db.Uuid
+  name   String
+  status StatusCard @default(FREE)
+  user   User?
 }
