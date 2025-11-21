@@ -6,3 +6,7 @@ export const bookSchema = z.object({
   authorId: z.string().optional(),
   authorName: z.string().optional(),
 });
+
+export const authorSchema = z.object({
+  name: z.string(),
+});
