@@ -1,0 +1,24 @@
+meta {
+  name: create a loan
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3000/api/loans
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "userId":"",
+    "bookID": "f8c5cd78-70e5-46d6-9a3b-d10260609a2b",
+    "loanDate": ""
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

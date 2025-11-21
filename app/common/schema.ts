@@ -10,3 +10,9 @@ export const bookSchema = z.object({
 export const authorSchema = z.object({
   name: z.string(),
 });
+
+export const loanSchema = z.object({
+  userId: z.string(),
+  bookId: z.string(),
+  loanDate: z.date(),
+});
