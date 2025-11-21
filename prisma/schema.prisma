@@ -79,7 +79,7 @@ model Verification {
 model Loan {
   id       String   @id
   userId   String
-  BookId   String
+  bookId   String
   loanDate DateTime
 }
 
