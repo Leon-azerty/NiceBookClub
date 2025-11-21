@@ -84,16 +84,17 @@ model Loan {
 }
 
 model Author {
-  id    String @id
+  id    String @id @default(uuid()) @db.Uuid
   name  String
   books Book[]
 }
 
 model Book {
-  id       String @id
+  id       String @id @default(uuid()) @db.Uuid
+  name     String
   genre    String
-  authorId String
-  author   Author @relation(fields: [authorId], references: [id])
+  authorId String @db.Uuid
+  author   Author @relation(fields: [authorId], references: [id], onDelete: Cascade)
 }
 
 enum StatusCard {
