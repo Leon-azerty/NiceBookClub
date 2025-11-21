@@ -15,11 +15,9 @@ export const auth = betterAuth({
     user: {
       create: {
         after: async (user, context) => {
-          console.log('New user created:', user);
           const availableCard = await prisma.memberCard.findFirst({
             where: { status: 'FREE', user: null },
           });
-          console.log('availableCard', availableCard);
 
           if (availableCard) {
             await prisma.memberCard.update({
