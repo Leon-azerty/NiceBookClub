@@ -11,6 +11,29 @@ export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: 'postgresql',
   }),
+  databaseHooks: {
+    user: {
+      create: {
+        after: async (user, context) => {
+          console.log('New user created:', user);
+          const availableCard = await prisma.memberCard.findFirst({
+            where: { status: 'FREE', user: null },
+          });
+          console.log('availableCard', availableCard);
+
+          if (availableCard) {
+            await prisma.memberCard.update({
+              where: { id: availableCard.id },
+              data: {
+                status: 'IN_USE',
+                user: { connect: { id: user.id } },
+              },
+            });
+          }
+        },
+      },
+    },
+  },
   emailAndPassword: {
     enabled: true,
     requireEmailVerification: true,
