@@ -15,6 +15,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Prisma } from '@/generated/prisma';
+import { authClient } from '@/lib/auth-client';
 import Image from 'next/image';
 import { Button } from './ui/button';
 
@@ -45,6 +46,26 @@ export default function BookResult({
     if (!res.ok) {
       throw new Error('Erreur lors de la suppression du livre');
     }
+  };
+
+  const loanBook = async (bookId: string) => {
+    const session = await authClient.getSession();
+    const res = await fetch(`/api/loans`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        bookId,
+        userId: session.data?.user.id,
+      }),
+    });
+
+    if (!res.ok) {
+      throw new Error("Erreur lors de l'emprunt du livre");
+    }
+    const data = await res.json();
+    console.log('Loan created:', data);
   };
 
   return (
@@ -150,7 +171,14 @@ export default function BookResult({
                   >
                     Delete this book
                   </Button>
-                  <Button>Loan this book</Button>
+                  <Button
+                    onClick={() => {
+                      loanBook(book.id);
+                    }}
+                    disabled={book.loans.length > 0}
+                  >
+                    Loan this book
+                  </Button>
                 </DialogFooter>
               </DialogContent>
             </Dialog>

@@ -14,5 +14,4 @@ export const authorSchema = z.object({
 export const loanSchema = z.object({
   userId: z.string(),
   bookId: z.string(),
-  loanDate: z.date(),
 });

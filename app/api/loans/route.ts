@@ -18,9 +18,10 @@ export async function POST(req: Request) {
       data: {
         userId: parsedBody.userId,
         bookId: parsedBody.bookId,
-        loanDate: parsedBody.loanDate,
+        loanDate: new Date(Date.now()),
       },
     });
+    console.log('New loan created:', newLoan);
     return Response.json(newLoan, { status: 201 });
   } catch (error) {
     console.error('Error creating book:', error);
