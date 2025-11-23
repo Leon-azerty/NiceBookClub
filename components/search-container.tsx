@@ -45,12 +45,12 @@ export default function SearchContainer({
     const results = books.filter((book) => {
       const matchesTitle = book.name
         .toLowerCase()
-        .includes(book.name.toLowerCase());
+        .includes(bookTitle.toLowerCase());
       const matchesAuthor = book.author.name
         .toLowerCase()
         .includes(author.toLowerCase());
       const matchesGenre = genre === '' || book.genre === genre;
-      const matchesAvailability = false; // !availableOnly || book.isAvailable;
+      const matchesAvailability = true; // !availableOnly || book.isAvailable;
 
       return (
         matchesTitle && matchesAuthor && matchesGenre && matchesAvailability
