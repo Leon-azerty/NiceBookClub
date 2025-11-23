@@ -15,6 +15,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Prisma } from '@/generated/prisma';
+import Image from 'next/image';
 import { Button } from './ui/button';
 
 export default function BookResult({
@@ -105,10 +106,30 @@ export default function BookResult({
                         <span className="text-muted-foreground">Genre:</span>
                         <span className="font-medium">{book.genre}</span>
                       </div>
-                      {/* <div className="flex justify-between">
+                      <div className="flex justify-between">
                         <span className="text-muted-foreground">Année:</span>
-                        <span className="font-medium">{book.year}</span>
-                      </div> */}
+                        <span className="font-medium">
+                          {book.publishedDate}
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Editeur:</span>
+                        <span className="font-medium">{book.publisher}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">
+                          Description:
+                        </span>
+                        <span className="font-medium">{book.description}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <Image
+                          src={book.imageLink || '/default-book-image.jpg'}
+                          alt={`Cover image of ${book.name}`}
+                          width={100}
+                          height={150}
+                        />
+                      </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">
                           Disponibilité:
