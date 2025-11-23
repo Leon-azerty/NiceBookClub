@@ -79,8 +79,9 @@ model Verification {
 model Loan {
   id       String   @id @default(uuid()) @db.Uuid
   userId   String
-  bookId   String
+  bookId   String   @db.Uuid
   loanDate DateTime
+  book     Book     @relation(fields: [bookId], references: [id])
 }
 
 model Author {
@@ -94,7 +95,9 @@ model Book {
   name     String
   genre    String
   authorId String @db.Uuid
-  author   Author @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  author Author @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  loans  Loan[]
 }
 
 enum StatusCard {

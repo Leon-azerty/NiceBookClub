@@ -18,7 +18,7 @@ export default function SearchContainer({
   setDisplayResults,
 }: {
   books: Prisma.BookGetPayload<{
-    include: { author: true };
+    include: { author: true; loans: true };
   }>[];
   bookTitle: string;
   author: string;
@@ -30,7 +30,7 @@ export default function SearchContainer({
   setSearchResults: React.Dispatch<
     React.SetStateAction<
       Prisma.BookGetPayload<{
-        include: { author: true };
+        include: { author: true; loans: true };
       }>[]
     >
   >;

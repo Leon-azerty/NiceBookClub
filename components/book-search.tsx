@@ -2,6 +2,7 @@
 
 import { Prisma } from '@/generated/prisma';
 import { useState } from 'react';
+import AddAuthor from './addAuthor';
 import AddBook from './addBook';
 import BookResult from './book-result';
 import SearchContainer from './search-container';
@@ -20,7 +21,7 @@ export function BookSearch({
   books,
 }: {
   books: Prisma.BookGetPayload<{
-    include: { author: true };
+    include: { author: true; loans: true };
   }>[];
 }) {
   const [bookTitle, setBookTitle] = useState('');
@@ -30,7 +31,7 @@ export function BookSearch({
   const [displayResults, setDisplayResults] = useState(true);
   const [searchResults, setSearchResults] = useState<
     Prisma.BookGetPayload<{
-      include: { author: true };
+      include: { author: true; loans: true };
     }>[]
   >(books);
 
@@ -44,6 +45,8 @@ export function BookSearch({
         </p>
       </div>
       <AddBook />
+      <AddAuthor />
+
       <SearchContainer
         books={books}
         bookTitle={bookTitle}

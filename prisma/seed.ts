@@ -13,6 +13,56 @@ async function main() {
 
   const result = await prisma.memberCard.createMany({ data: cards });
   console.log('Created member cards count:', result.count);
+
+  await prisma.author.create({
+    data: {
+      name: 'F. Scott Fitzgerald',
+      books: {
+        create: [
+          { name: 'The Great Gatsby', genre: 'Fiction' },
+          { name: 'Tender Is the Night', genre: 'Fiction' },
+        ],
+      },
+    },
+  });
+
+  await prisma.author.create({
+    data: {
+      name: 'J.K. Rowling',
+      books: {
+        create: [
+          { name: "Harry Potter and the Sorcerer's Stone", genre: 'Fantastic' },
+          {
+            name: 'Harry Potter and the Chamber of Secrets',
+            genre: 'Fantastic',
+          },
+          {
+            name: 'Harry Potter and the Prisoner of Azkaban',
+            genre: 'Fantastic',
+          },
+          { name: 'Harry Potter and the Goblet of Fire', genre: 'Fantastic' },
+          {
+            name: 'Harry Potter and the Order of the Phoenix',
+            genre: 'Fantastic',
+          },
+          {
+            name: 'Harry Potter and the Half-Blood Prince',
+            genre: 'Fantastic',
+          },
+          { name: 'Harry Potter and the Deathly Hallows', genre: 'Fantastic' },
+        ],
+      },
+    },
+  });
+
+  await prisma.author.create({
+    data: {
+      name: 'John Green',
+      books: {
+        create: [{ name: 'Our Fault in the Stars', genre: 'Love' }],
+      },
+    },
+  });
 }
 
 main()
