@@ -51,9 +51,8 @@ export default function Page() {
           e.stopPropagation();
         }}
       >
-        <form.Field
-          name="mail"
-          children={(field) => (
+        <form.Field name="mail">
+          {(field) => (
             <div className="flex flex-col gap-2">
               <Label htmlFor="mail">mail</Label>
               <Input
@@ -69,11 +68,10 @@ export default function Page() {
               )}
             </div>
           )}
-        />
+        </form.Field>
 
-        <form.Field
-          name="password"
-          children={(field) => (
+        <form.Field name="password">
+          {(field) => (
             <div className="flex flex-col gap-2">
               <Label htmlFor="password">password</Label>
               <div>
@@ -99,7 +97,7 @@ export default function Page() {
               </div>
             </div>
           )}
-        />
+        </form.Field>
         {error && <p className="text-destructive">{error}</p>}
         <Button type="submit" onClick={form.handleSubmit}>
           {isLoading && <Spinner />}

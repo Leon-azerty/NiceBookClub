@@ -56,9 +56,8 @@ export default function AddBook() {
             className="space-y-4"
           >
             {/* name */}
-            <form.Field
-              name="name"
-              children={(field) => (
+            <form.Field name="name">
+              {(field) => (
                 <div className="flex flex-col gap-1">
                   <Label>Name</Label>
                   <Input
@@ -73,7 +72,7 @@ export default function AddBook() {
                     ))}
                 </div>
               )}
-            ></form.Field>
+            </form.Field>
 
             {/* genre */}
             <form.Field name="genre">

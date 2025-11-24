@@ -60,9 +60,8 @@ export default function Page() {
               e.stopPropagation();
             }}
           >
-            <form.Field
-              name="mail"
-              children={(field) => (
+            <form.Field name="mail">
+              {(field) => (
                 <>
                   <Label htmlFor="mail">mail</Label>
                   <Input
@@ -78,11 +77,10 @@ export default function Page() {
                   )}
                 </>
               )}
-            />
+            </form.Field>
 
-            <form.Field
-              name="password"
-              children={(field) => (
+            <form.Field name="password">
+              {(field) => (
                 <>
                   <Label htmlFor="password">password</Label>
                   <Input
@@ -98,7 +96,7 @@ export default function Page() {
                   )}
                 </>
               )}
-            />
+            </form.Field>
             <Button type="submit" onClick={form.handleSubmit}>
               {isLoading && <Spinner />}
               Submit
