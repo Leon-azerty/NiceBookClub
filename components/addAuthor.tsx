@@ -24,8 +24,12 @@ export default function AddAuthor() {
       }
       setSuccess(true);
       setName('');
-    } catch (err: any) {
-      setError(err.message || 'Erreur inconnue');
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('Erreur inconnue');
+      }
     } finally {
       setLoading(false);
     }

@@ -1,4 +1,5 @@
 import { authClient } from '@/lib/auth-client'; //import the auth client
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { Dispatch, SetStateAction } from 'react';
 
 export async function signIn({
@@ -9,7 +10,7 @@ export async function signIn({
 }: {
   email: string;
   password: string;
-  router: any;
+  router: AppRouterInstance;
   setError: Dispatch<SetStateAction<string | null>>;
 }) {
   await authClient.signIn.email(
