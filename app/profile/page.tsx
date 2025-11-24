@@ -5,6 +5,7 @@ import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { CircleCheck } from 'lucide-react';
 import { headers } from 'next/headers';
+import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import Signout from '../signout';
 import Password from './password';
@@ -26,6 +27,7 @@ export default async function Page() {
 
   return (
     <main className="flex size-full items-center justify-center">
+      <Link href="/">Voir les livres</Link>
       <section className="flex flex-col">
         <Avatar>
           <AvatarImage src={session?.user.image ?? undefined} />
