@@ -37,7 +37,7 @@ export default function SearchContainer({
   // Extraire les genres uniques
   const genres = useMemo(() => {
     return Array.from(new Set(books.map((book) => book.genre))).sort();
-  }, []);
+  }, [books]);
 
   const handleSearch = () => {
     const results = books.filter((book) => {
