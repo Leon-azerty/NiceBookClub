@@ -5,7 +5,6 @@ import { Dispatch, SetStateAction } from 'react';
 export async function signIn({
   email,
   password,
-  router,
   setError,
 }: {
   email: string;
