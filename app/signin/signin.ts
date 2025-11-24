@@ -12,7 +12,7 @@ export async function signIn({
   router: any;
   setError: Dispatch<SetStateAction<string | null>>;
 }) {
-  const { data, error } = await authClient.signIn.email(
+  await authClient.signIn.email(
     {
       /**
        * The user email

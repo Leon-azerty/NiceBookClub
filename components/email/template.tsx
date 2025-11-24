@@ -7,7 +7,6 @@ interface EmailVerificationTemplateProps {
 export function EmailVerificationTemplate({
   firstName,
   url,
-  token,
 }: EmailVerificationTemplateProps) {
   return (
     <div>
@@ -26,7 +25,6 @@ interface ResetPasswordTemplateProps {
 export function ResetPasswordTemplate({
   firstName,
   url,
-  token,
 }: ResetPasswordTemplateProps) {
   return (
     <div>

@@ -17,7 +17,6 @@ export function BookSearch({
   const [bookTitle, setBookTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [genre, setGenre] = useState('');
-  const [availableOnly, setAvailableOnly] = useState(false);
   const [displayResults, setDisplayResults] = useState(true);
   const [searchResults, setSearchResults] = useState<
     Prisma.BookGetPayload<{
@@ -45,15 +44,10 @@ export function BookSearch({
         setBookTitle={setBookTitle}
         setAuthor={setAuthor}
         setGenre={setGenre}
-        setAvailableOnly={setAvailableOnly}
         setSearchResults={setSearchResults}
         setDisplayResults={setDisplayResults}
       />
       <BookResult
-        bookTitle={bookTitle}
-        author={author}
-        genre={genre}
-        availableOnly={availableOnly}
         displayResults={displayResults}
         searchResults={searchResults}
       />

@@ -8,7 +8,9 @@ export default function RepayLoan({ loan }: { loan: Loan }) {
     const res = await fetch(`/api/loans/${loan.id}`, {
       method: 'DELETE',
     });
-    const data = await res.json();
+    if (!res.ok) {
+      throw new Error('Erreur lors du rendu du livre');
+    }
   };
 
   return (

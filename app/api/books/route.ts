@@ -2,11 +2,12 @@ import { bookSchema } from '@/app/common/schema';
 import { prisma } from '@/lib/prisma';
 import { waitUntil } from '@vercel/functions';
 
-export async function GET(req: Request) {
+export async function GET() {
   try {
     const books = await prisma.book.findMany();
     return Response.json(books);
   } catch (error) {
+    console.error('Error fetching books', error);
     return Response.json({ error: 'error fetching books' }, { status: 500 });
   }
 }

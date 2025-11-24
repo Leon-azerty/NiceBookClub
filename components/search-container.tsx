@@ -26,7 +26,6 @@ export default function SearchContainer({
   setBookTitle: React.Dispatch<React.SetStateAction<string>>;
   setAuthor: React.Dispatch<React.SetStateAction<string>>;
   setGenre: React.Dispatch<React.SetStateAction<string>>;
-  setAvailableOnly: React.Dispatch<React.SetStateAction<boolean>>;
   setSearchResults: React.Dispatch<
     React.SetStateAction<
       Prisma.BookGetPayload<{
@@ -64,7 +63,6 @@ export default function SearchContainer({
     setBookTitle('');
     setAuthor('');
     setGenre('');
-    setAvailableOnly(false);
     setSearchResults(books);
     setDisplayResults(true);
   };

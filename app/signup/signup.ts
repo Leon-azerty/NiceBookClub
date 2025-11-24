@@ -6,14 +6,12 @@ export async function signUpUser({
   password, // min 8 characters by default
   name,
   image, // User image URL (optional)
-  router,
   setIsLoading,
 }: {
   email: string;
   password: string;
   name: string;
   image?: string;
-  router: any;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
 }) {
   const { data, error } = await authClient.signUp.email(

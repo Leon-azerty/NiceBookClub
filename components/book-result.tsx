@@ -20,17 +20,9 @@ import Image from 'next/image';
 import { Button } from './ui/button';
 
 export default function BookResult({
-  bookTitle,
-  author,
-  genre,
-  availableOnly,
   displayResults,
   searchResults,
 }: {
-  bookTitle: string;
-  author: string;
-  genre: string;
-  availableOnly: boolean;
   displayResults: boolean;
   searchResults: Prisma.BookGetPayload<{
     include: { author: true; loans: true };

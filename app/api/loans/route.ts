@@ -1,11 +1,12 @@
 import { loanSchema } from '@/app/common/schema';
 import { prisma } from '@/lib/prisma';
 
-export async function GET(req: Request) {
+export async function GET() {
   try {
     const loans = await prisma.loan.findMany();
     return Response.json(loans);
   } catch (error) {
+    console.error('Error fetching loans', error);
     return Response.json({ error: 'error fetching loans' }, { status: 500 });
   }
 }

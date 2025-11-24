@@ -1,7 +1,4 @@
 import { auth } from '@/lib/auth';
-import { Resend } from 'resend';
-
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: Request) {
   try {
@@ -23,6 +20,7 @@ export async function POST(req: Request) {
 
     return Response.json({}, { status: 200 });
   } catch (error) {
+    console.error('Error sending verification mail', error);
     return Response.json({ error }, { status: 500 });
   }
 }

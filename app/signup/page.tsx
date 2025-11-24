@@ -13,14 +13,12 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useForm } from '@tanstack/react-form';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import z from 'zod';
 import { signUpUser } from './signup';
 
 export default function Page() {
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
   const [shouldShowForm, setShouldShowForm] = useState(true);
 
   const signInSchema = z.object({
@@ -34,11 +32,10 @@ export default function Page() {
       password: '',
     },
     onSubmit: async (values) => {
-      const { data, error } = await signUpUser({
+      const { error } = await signUpUser({
         email: values.value.mail,
         password: values.value.password,
         name: 'test',
-        router,
         setIsLoading,
       });
       if (error) {

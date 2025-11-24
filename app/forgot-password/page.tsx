@@ -9,7 +9,7 @@ import { useState } from 'react';
 export default function Page() {
   const [email, setEmail] = useState('');
 
-  const ResetPasword = async (params: any) => {
+  const ResetPasword = async () => {
     const { data, error } = await authClient.requestPasswordReset({
       email: email,
       redirectTo: '/forgot-password/verify-token',
