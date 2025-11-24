@@ -1,4 +1,4 @@
-// app/api/books/[id]/route.ts
+// app/api/authors/[id]/route.ts
 
 import { authorSchema } from '@/app/common/schema';
 import { prisma } from '@/lib/prisma';
@@ -6,9 +6,9 @@ import { NextResponse } from 'next/server';
 
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } = params;
+  const { id } = await params;
 
   const author = await prisma.author.findUnique({
     where: { id },
@@ -24,7 +24,7 @@ export async function GET(
 // Il faut aussi qu'on puisse modifier les livres de l'auteur ?
 export async function PUT(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
   try {
@@ -46,9 +46,9 @@ export async function PUT(
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } = params;
+  const { id } = await params;
   try {
     const deletedAuthor = await prisma.author.delete({
       where: { id },
