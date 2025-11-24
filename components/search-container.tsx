@@ -39,22 +39,22 @@ export default function SearchContainer({
     return Array.from(new Set(books.map((book) => book.genre))).sort();
   }, [books]);
 
-  const handleSearch = () => {
-    const results = books.filter((book) => {
-      const matchesTitle = book.name
-        .toLowerCase()
-        .includes(bookTitle.toLowerCase());
-      const matchesAuthor = book.author.name
-        .toLowerCase()
-        .includes(author.toLowerCase());
-      const matchesGenre = genre === '' || book.genre === genre;
-      const matchesAvailability = true; // !availableOnly || book.isAvailable;
-
-      return (
-        matchesTitle && matchesAuthor && matchesGenre && matchesAvailability
-      );
+  const handleSearch = async () => {
+    const params = new URLSearchParams({
+      name: bookTitle,
+      author,
+      genre,
+      available: 'true',
     });
-    setSearchResults(results);
+
+    const res = await fetch(`/api/books?${params.toString()}`, {
+      method: 'GET',
+    });
+    if (!res.ok) {
+      throw new Error('Error fetching books');
+    }
+    const books = await res.json();
+    setSearchResults(books);
     setDisplayResults(true);
   };
 

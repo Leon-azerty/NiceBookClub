@@ -1,10 +1,54 @@
 import { bookSchema } from '@/app/common/schema';
 import { prisma } from '@/lib/prisma';
 import { waitUntil } from '@vercel/functions';
+import { NextRequest } from 'next/server';
 
-export async function GET() {
+export async function GET(
+  req: NextRequest,
+  {
+    params,
+  }: {
+    params: Promise<{
+      name: string;
+      author: string;
+      genre: string;
+      available: string;
+    }>;
+  }
+) {
   try {
-    const books = await prisma.book.findMany();
+    const searchParams = req.nextUrl.searchParams;
+    const name = searchParams.get('name');
+    const author = searchParams.get('author');
+    const genre = searchParams.get('genre');
+    // const available = searchParams.get('available')
+
+    console.log('name', name);
+    console.log('author', author);
+    console.log('genre', genre);
+
+    const where: any = {};
+    if (name) {
+      where.name = { contains: name, mode: 'insensitive' };
+    }
+    if (genre) {
+      where.genre = { equals: genre, mode: 'insensitive' };
+    }
+    if (author) {
+      where.author = { name: { contains: author, mode: 'insensitive' } };
+    }
+    // if (available === 'true') {
+    //   // filtre les livres sans prêts actifs
+    //   where.loans = { none: {} };
+    // }
+
+    const books = await prisma.book.findMany({
+      where: where,
+      include: {
+        author: true,
+        loans: true,
+      },
+    });
     return Response.json(books);
   } catch (error) {
     console.error('Error fetching books', error);
