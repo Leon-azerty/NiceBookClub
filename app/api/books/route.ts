@@ -1,21 +1,10 @@
 import { bookSchema } from '@/app/common/schema';
+import { Prisma } from '@/generated/prisma';
 import { prisma } from '@/lib/prisma';
 import { waitUntil } from '@vercel/functions';
 import { NextRequest } from 'next/server';
 
-export async function GET(
-  req: NextRequest,
-  {
-    params,
-  }: {
-    params: Promise<{
-      name: string;
-      author: string;
-      genre: string;
-      available: string;
-    }>;
-  }
-) {
+export async function GET(req: NextRequest) {
   try {
     const searchParams = req.nextUrl.searchParams;
     const name = searchParams.get('name');
@@ -27,7 +16,7 @@ export async function GET(
     console.log('author', author);
     console.log('genre', genre);
 
-    const where: any = {};
+    const where: Prisma.BookWhereInput = {};
     if (name) {
       where.name = { contains: name, mode: 'insensitive' };
     }
