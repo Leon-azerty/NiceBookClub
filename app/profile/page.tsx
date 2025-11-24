@@ -3,10 +3,8 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
-import { CircleCheck } from 'lucide-react';
 import { headers } from 'next/headers';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
 import Signout from '../signout';
 import Password from './password';
 import RepayLoan from './repayLoan';
@@ -15,10 +13,6 @@ export default async function Page() {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
-
-  if (!session?.user.emailVerified) {
-    redirect(`/verify?email=${session?.user.email}`);
-  }
 
   const loans = await prisma.loan.findMany({
     where: { userId: session?.user.id },
@@ -36,7 +30,6 @@ export default async function Page() {
         <p>Profile : {session?.user.name}</p>
         <div className="flex gap-2">
           <p>email : {session?.user.email}</p>
-          {session.user.emailVerified && <CircleCheck />}
         </div>
         <Password />
         <ModeToggle />

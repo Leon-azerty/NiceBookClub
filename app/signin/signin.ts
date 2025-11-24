@@ -39,7 +39,7 @@ export async function signIn({
         console.log('ctx', ctx);
         // Handle the error
         if (ctx.error.status === 403) {
-          router.push(`/verify-email`);
+          // router.push(`/verify-email`);
           // alert('Please verify your email address');
         }
         if (ctx.error.code === 'INVALID_EMAIL_OR_PASSWORD') {
