@@ -7,16 +7,6 @@ import AddBook from './addBook';
 import BookResult from './book-result';
 import SearchContainer from './search-container';
 
-// interface Book {
-//   id: string;
-//   title: string;
-//   author: string;
-//   genre: string;
-//   year: number;
-//   cover?: string;
-//   isAvailable: boolean;
-// }
-
 export function BookSearch({
   books,
 }: {

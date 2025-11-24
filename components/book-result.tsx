@@ -169,7 +169,7 @@ export default function BookResult({
                     variant={'destructive'}
                     onClick={() => deleteBook(book.id)}
                   >
-                    Delete this book
+                    Supprimer le livre
                   </Button>
                   <Button
                     onClick={() => {
@@ -177,7 +177,7 @@ export default function BookResult({
                     }}
                     disabled={book.loans.length > 0}
                   >
-                    Loan this book
+                    Emprunter ce livre
                   </Button>
                 </DialogFooter>
               </DialogContent>
