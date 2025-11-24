@@ -85,7 +85,7 @@ export default function Page() {
                   <Label htmlFor="password">password</Label>
                   <Input
                     id="password"
-                    type="text"
+                    type="password"
                     value={field.state.value}
                     onChange={(e) => field.handleChange(e.target.value)}
                   />

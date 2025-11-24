@@ -77,7 +77,7 @@ export default function Page() {
               <div>
                 <Input
                   id="password"
-                  type="text"
+                  type="password"
                   value={field.state.value}
                   onChange={(e) => field.handleChange(e.target.value)}
                 />
