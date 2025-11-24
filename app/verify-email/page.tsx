@@ -21,7 +21,8 @@ export default async function Page() {
 
   return (
     <section>
-      Si le lien n'est plus valide et qu'il faut en renvoyer un nouveau
+      Si le lien n&apos;est plus valide et qu&apos;il faut en renvoyer un
+      nouveau
       <SendMail email={session?.user.email} />
     </section>
   );

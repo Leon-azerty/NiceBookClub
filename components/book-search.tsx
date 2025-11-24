@@ -29,8 +29,8 @@ export function BookSearch({
       <div className="mb-8">
         <h1 className="mb-2 text-3xl font-bold">Recherche de Livres</h1>
         <p className="text-muted-foreground">
-          Trouvez vos livres préférés en fonction du titre, de l'auteur ou du
-          genre
+          Trouvez vos livres préférés en fonction du titre, de l&apos;auteur ou
+          du genre
         </p>
       </div>
       <AddBook />

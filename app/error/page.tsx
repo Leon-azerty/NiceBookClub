@@ -1,3 +1,3 @@
 export default function Page() {
-  return <section>error lié à l'émail</section>;
+  return <section>error lié à l&apos;émail</section>;
 }

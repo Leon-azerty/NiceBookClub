@@ -13,7 +13,6 @@ export default function SearchContainer({
   setBookTitle,
   setAuthor,
   setGenre,
-  setAvailableOnly,
   setSearchResults,
   setDisplayResults,
 }: {

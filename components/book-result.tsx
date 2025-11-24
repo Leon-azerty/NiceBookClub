@@ -34,7 +34,6 @@ export default function BookResult({
     const res = await fetch(`/api/books/${bookId}`, {
       method: 'DELETE',
     });
-    const data = await res.json();
     if (!res.ok) {
       throw new Error('Erreur lors de la suppression du livre');
     }
@@ -180,7 +179,7 @@ export default function BookResult({
         <Card>
           <CardContent className="text-muted-foreground pt-6 text-center">
             <p>Aucun livre ne correspond à votre recherche.</p>
-            <p className="mt-2 text-sm">Essayez d'ajuster vos filtres.</p>
+            <p className="mt-2 text-sm">Essayez d&apos;ajuster vos filtres.</p>
           </CardContent>
         </Card>
       )}

@@ -110,7 +110,7 @@ export default function Page() {
         </Button> */}
       </form>
       <div>
-        Don't have an account ? click{' '}
+        Don&apos;t have an account ? click
         <Link href="/signup" className="hover:underline">
           here to signup
         </Link>

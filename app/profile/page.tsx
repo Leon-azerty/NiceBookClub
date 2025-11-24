@@ -49,7 +49,7 @@ export default async function Page() {
                 </CardHeader>
                 <CardContent className="space-y-2">
                   <p>
-                    Date d'emprunt:
+                    Date d&apos;emprunt:
                     {new Date(loan.loanDate).toLocaleDateString()}
                   </p>
                   <RepayLoan loan={loan} />

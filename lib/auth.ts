@@ -14,7 +14,7 @@ export const auth = betterAuth({
   databaseHooks: {
     user: {
       create: {
-        after: async (user, context) => {
+        after: async (user) => {
           const availableCard = await prisma.memberCard.findFirst({
             where: { status: 'FREE', user: null },
           });
@@ -36,7 +36,7 @@ export const auth = betterAuth({
     enabled: true,
     requireEmailVerification: true,
 
-    sendResetPassword: async ({ user, url, token }, request) => {
+    sendResetPassword: async ({ user, url, token }) => {
       const resend = new Resend(process.env.RESEND_API_KEY);
       const { data, error } = await resend.emails.send({
         from: 'Acme <onboarding@resend.dev>',
@@ -59,7 +59,7 @@ export const auth = betterAuth({
     updateAge: 60 * 60 * 24, // 1 day (every 1 day the session expiration is updated)
   },
   emailVerification: {
-    sendVerificationEmail: async ({ user, url, token }, request) => {
+    sendVerificationEmail: async ({ user, url, token }) => {
       const resend = new Resend(process.env.RESEND_API_KEY);
       const { data, error } = await resend.emails.send({
         from: 'Acme <onboarding@resend.dev>',
