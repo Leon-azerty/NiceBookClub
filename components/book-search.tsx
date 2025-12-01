@@ -17,7 +17,6 @@ export function BookSearch({
   const [bookTitle, setBookTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [genre, setGenre] = useState('');
-  const [displayResults, setDisplayResults] = useState(true);
   const [searchResults, setSearchResults] = useState<
     Prisma.BookGetPayload<{
       include: { author: true; loans: true };
@@ -45,12 +44,8 @@ export function BookSearch({
         setAuthor={setAuthor}
         setGenre={setGenre}
         setSearchResults={setSearchResults}
-        setDisplayResults={setDisplayResults}
       />
-      <BookResult
-        displayResults={displayResults}
-        searchResults={searchResults}
-      />
+      <BookResult initialBooks={searchResults} />
     </div>
   );
 }

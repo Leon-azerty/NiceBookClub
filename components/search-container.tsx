@@ -14,7 +14,6 @@ export default function SearchContainer({
   setAuthor,
   setGenre,
   setSearchResults,
-  setDisplayResults,
 }: {
   books: Prisma.BookGetPayload<{
     include: { author: true; loans: true };
@@ -32,7 +31,6 @@ export default function SearchContainer({
       }>[]
     >
   >;
-  setDisplayResults: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   // Extraire les genres uniques
   const genres = useMemo(() => {
@@ -55,7 +53,6 @@ export default function SearchContainer({
     }
     const books = await res.json();
     setSearchResults(books);
-    setDisplayResults(true);
   };
 
   const handleReset = () => {
@@ -63,7 +60,6 @@ export default function SearchContainer({
     setAuthor('');
     setGenre('');
     setSearchResults(books);
-    setDisplayResults(true);
   };
   return (
     <Card className="mb-8">

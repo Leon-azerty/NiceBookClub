@@ -22,17 +22,15 @@ import Spinner from './skeleton/spinner';
 import { Button } from './ui/button';
 
 export default function BookResult({
-  displayResults,
-  searchResults,
+  initialBooks,
 }: {
-  displayResults: boolean;
-  searchResults: Prisma.BookGetPayload<{
+  initialBooks: Prisma.BookGetPayload<{
     include: { author: true; loans: true };
   }>[];
 }) {
   const [isButtonForLoanVisible, setIsButtonForLoanVisible] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  if (!displayResults) return null;
+  const [books, setBooks] = useState(initialBooks);
 
   const deleteBook = async (bookId: string) => {
     const res = await fetch(`/api/books/${bookId}`, {
@@ -63,19 +61,21 @@ export default function BookResult({
     }
     const data = await res.json();
     console.log('Loan created:', data);
+    setBooks((prevBooks) =>
+      prevBooks.map((b) => (b.id === bookId ? { ...b, loans: [data] } : b))
+    );
+
     setIsButtonForLoanVisible(false);
     setIsLoading(false);
   };
 
   return (
     <div>
-      <h2 className="mb-4 text-lg font-semibold">
-        Résultats ({searchResults.length})
-      </h2>
+      <h2 className="mb-4 text-lg font-semibold">Résultats ({books.length})</h2>
 
-      {searchResults.length > 0 ? (
+      {books.length > 0 ? (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {searchResults.map((book) => (
+          {books.map((book) => (
             <Dialog key={book.id}>
               <DialogTrigger
                 className="cursor-pointer transition-shadow hover:shadow-lg"
