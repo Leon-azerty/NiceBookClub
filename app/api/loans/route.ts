@@ -1,10 +1,11 @@
 import { loanSchema } from '@/app/common/schema';
+import { Prisma } from '@/generated/prisma';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { headers } from 'next/headers';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
@@ -12,7 +13,30 @@ export async function GET() {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
   try {
-    const loans = await prisma.loan.findMany();
+    const searchParams = req.nextUrl.searchParams;
+    const userEmail = searchParams.get('userEmail');
+    const bookName = searchParams.get('bookName');
+
+    const where: Prisma.LoanWhereInput = {};
+
+    if (userEmail) {
+      where.user = {
+        email: { contains: userEmail, mode: 'insensitive' },
+      };
+    }
+    if (bookName) {
+      where.book = {
+        name: { contains: bookName, mode: 'insensitive' },
+      };
+    }
+
+    const loans = await prisma.loan.findMany({
+      where: where,
+      include: {
+        user: true,
+        book: true,
+      },
+    });
     return Response.json(loans);
   } catch (error) {
     console.error('Error fetching loans', error);

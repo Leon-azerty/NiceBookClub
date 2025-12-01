@@ -1,19 +1,19 @@
 'use client';
+
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Prisma } from '@/generated/prisma';
-import { useState } from 'react';
-import RepayLoan from './repayLoan';
 
 export default function LoansList({
-  initialLoans,
+  loans,
 }: {
-  initialLoans: Prisma.LoanGetPayload<{ include: { book: true } }>[];
+  loans: Prisma.LoanGetPayload<{
+    include: { book: true; user: true };
+  }>[];
 }) {
-  const [loans, setLoans] = useState(initialLoans);
   return (
-    <>
+    <div className="flex items-center">
       {loans.map((loan) => (
-        <Card key={loan.id}>
+        <Card key={loan.id} className="">
           <CardHeader>
             <CardTitle>{loan.book.name}</CardTitle>
           </CardHeader>
@@ -22,16 +22,10 @@ export default function LoansList({
               Date d&apos;emprunt:
               {new Date(loan.loanDate).toLocaleDateString()}
             </p>
-            <RepayLoan
-              loan={loan}
-              onRepaying={() => {
-                const newLoans = loans.filter((item) => item !== loan);
-                setLoans(newLoans);
-              }}
-            />
+            <p>User : {loan.user.email}</p>
           </CardContent>
         </Card>
       ))}
-    </>
+    </div>
   );
 }
