@@ -1,10 +1,19 @@
 import { bookSchema } from '@/app/common/schema';
 import { Prisma } from '@/generated/prisma';
+import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { waitUntil } from '@vercel/functions';
-import { NextRequest } from 'next/server';
+import { headers } from 'next/headers';
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest) {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+  if (!session?.user) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
   try {
     const searchParams = req.nextUrl.searchParams;
     const name = searchParams.get('name');
@@ -62,6 +71,12 @@ const getAdditionalBookData = async (bookName: string, id: string) => {
 };
 
 export async function POST(req: Request) {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+  if (!session?.user) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
   const body = await req.json();
   try {
     const parsedBody = bookSchema.parse(body);
