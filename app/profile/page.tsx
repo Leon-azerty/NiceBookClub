@@ -21,8 +21,8 @@ export default async function Page() {
 
   return (
     <main className="flex size-full items-center justify-center">
-      <Link href="/">Voir les livres</Link>
       <section className="flex flex-col">
+        <Link href="/">Voir les livres</Link>
         <Avatar>
           <AvatarImage src={session?.user.image ?? undefined} />
           <AvatarFallback>{session?.user.name[0]}</AvatarFallback>
@@ -34,9 +34,9 @@ export default async function Page() {
         <Password />
         <ModeToggle />
         <Signout />
-        <div>
+        <div className="max-w-9/12">
           <h2>Loans:</h2>
-          <div className="flex space-x-2">
+          <div className="flex flex-wrap space-x-2">
             {loans.map((loan) => (
               <Card key={loan.id}>
                 <CardHeader>
