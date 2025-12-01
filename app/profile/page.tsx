@@ -1,13 +1,12 @@
 import { ModeToggle } from '@/components/mode-toggle';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { headers } from 'next/headers';
 import Link from 'next/link';
 import Signout from '../signout';
+import LoansList from './loansList';
 import Password from './password';
-import RepayLoan from './repayLoan';
 
 export default async function Page() {
   const session = await auth.api.getSession({
@@ -37,20 +36,7 @@ export default async function Page() {
         <div className="max-w-9/12">
           <h2>Loans:</h2>
           <div className="flex flex-wrap space-x-2">
-            {loans.map((loan) => (
-              <Card key={loan.id}>
-                <CardHeader>
-                  <CardTitle>{loan.book.name}</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-2">
-                  <p>
-                    Date d&apos;emprunt:
-                    {new Date(loan.loanDate).toLocaleDateString()}
-                  </p>
-                  <RepayLoan loan={loan} />
-                </CardContent>
-              </Card>
-            ))}
+            <LoansList initialLoans={loans} />
           </div>
         </div>
       </section>

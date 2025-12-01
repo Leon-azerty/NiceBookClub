@@ -17,6 +17,8 @@ import {
 import { Prisma } from '@/generated/prisma';
 import { authClient } from '@/lib/auth-client';
 import Image from 'next/image';
+import { useState } from 'react';
+import Spinner from './skeleton/spinner';
 import { Button } from './ui/button';
 
 export default function BookResult({
@@ -28,6 +30,8 @@ export default function BookResult({
     include: { author: true; loans: true };
   }>[];
 }) {
+  const [isButtonForLoanVisible, setIsButtonForLoanVisible] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   if (!displayResults) return null;
 
   const deleteBook = async (bookId: string) => {
@@ -40,6 +44,7 @@ export default function BookResult({
   };
 
   const loanBook = async (bookId: string) => {
+    setIsLoading(true);
     const session = await authClient.getSession();
     const res = await fetch(`/api/loans`, {
       method: 'POST',
@@ -53,10 +58,13 @@ export default function BookResult({
     });
 
     if (!res.ok) {
+      setIsLoading(false);
       throw new Error("Erreur lors de l'emprunt du livre");
     }
     const data = await res.json();
     console.log('Loan created:', data);
+    setIsButtonForLoanVisible(false);
+    setIsLoading(false);
   };
 
   return (
@@ -166,8 +174,9 @@ export default function BookResult({
                     onClick={() => {
                       loanBook(book.id);
                     }}
-                    disabled={book.loans.length > 0}
+                    disabled={book.loans.length > 0 || !isButtonForLoanVisible}
                   >
+                    {isLoading && <Spinner />}
                     Emprunter ce livre
                   </Button>
                 </DialogFooter>
