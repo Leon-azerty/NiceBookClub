@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { BookSearch } from '@/components/book-search';
 import { prisma } from '@/lib/prisma';
 
