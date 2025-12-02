@@ -87,6 +87,10 @@ export async function POST(req: Request) {
           genre: parsedBody.genre,
           authorId: parsedBody.authorId,
         },
+        include: {
+          author: true,
+          loans: true,
+        },
       });
       return Response.json(newBook, { status: 201 });
     } else if (parsedBody.authorName) {
@@ -99,6 +103,10 @@ export async function POST(req: Request) {
               name: parsedBody.authorName,
             },
           },
+        },
+        include: {
+          author: true,
+          loans: true,
         },
       });
       waitUntil(getAdditionalBookData(newBook.name, newBook.id));

@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Prisma } from '@/generated/prisma';
 import { Search } from 'lucide-react';
-import { useMemo } from 'react';
+import { Dispatch, SetStateAction, useMemo } from 'react';
 
 export default function SearchContainer({
   books,
@@ -13,7 +13,7 @@ export default function SearchContainer({
   setBookTitle,
   setAuthor,
   setGenre,
-  setSearchResults,
+  setBooks,
 }: {
   books: Prisma.BookGetPayload<{
     include: { author: true; loans: true };
@@ -21,11 +21,11 @@ export default function SearchContainer({
   bookTitle: string;
   author: string;
   genre: string;
-  setBookTitle: React.Dispatch<React.SetStateAction<string>>;
-  setAuthor: React.Dispatch<React.SetStateAction<string>>;
-  setGenre: React.Dispatch<React.SetStateAction<string>>;
-  setSearchResults: React.Dispatch<
-    React.SetStateAction<
+  setBookTitle: Dispatch<SetStateAction<string>>;
+  setAuthor: Dispatch<SetStateAction<string>>;
+  setGenre: Dispatch<SetStateAction<string>>;
+  setBooks: Dispatch<
+    SetStateAction<
       Prisma.BookGetPayload<{
         include: { author: true; loans: true };
       }>[]
@@ -52,14 +52,14 @@ export default function SearchContainer({
       throw new Error('Error fetching books');
     }
     const books = await res.json();
-    setSearchResults(books);
+    setBooks(books);
   };
 
   const handleReset = () => {
     setBookTitle('');
     setAuthor('');
     setGenre('');
-    setSearchResults(books);
+    setBooks(books);
   };
   return (
     <Card className="mb-8">

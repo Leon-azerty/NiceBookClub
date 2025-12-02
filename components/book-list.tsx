@@ -25,6 +25,7 @@ export default function BookList({
     >
   >;
 }) {
+  console.log('books', books);
   return (
     <>
       {books.map((book) => (

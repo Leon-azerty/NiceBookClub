@@ -8,20 +8,20 @@ import BookResult from './book-result';
 import SearchContainer from './search-container';
 
 export function BookSearch({
-  books,
+  initialBooks,
 }: {
-  books: Prisma.BookGetPayload<{
+  initialBooks: Prisma.BookGetPayload<{
     include: { author: true; loans: true };
   }>[];
 }) {
   const [bookTitle, setBookTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [genre, setGenre] = useState('');
-  const [searchResults, setSearchResults] = useState<
+  const [books, setBooks] = useState<
     Prisma.BookGetPayload<{
       include: { author: true; loans: true };
     }>[]
-  >(books);
+  >(initialBooks);
 
   return (
     <div className="mx-auto w-full max-w-4xl p-6">
@@ -32,7 +32,7 @@ export function BookSearch({
           du genre
         </p>
       </div>
-      <AddBook />
+      <AddBook setBooks={setBooks} />
       <AddAuthor />
 
       <SearchContainer
@@ -43,9 +43,9 @@ export function BookSearch({
         setBookTitle={setBookTitle}
         setAuthor={setAuthor}
         setGenre={setGenre}
-        setSearchResults={setSearchResults}
+        setBooks={setBooks}
       />
-      <BookResult initialBooks={searchResults} />
+      <BookResult books={books} setBooks={setBooks} />
     </div>
   );
 }

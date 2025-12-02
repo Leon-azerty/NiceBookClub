@@ -1,14 +1,25 @@
 'use client';
 
+import { Prisma } from '@/generated/prisma';
 import { useForm } from '@tanstack/react-form';
 import { CircleX } from 'lucide-react';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import Spinner from './skeleton/spinner';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
 
-export default function AddBook() {
+export default function AddBook({
+  setBooks,
+}: {
+  setBooks: Dispatch<
+    SetStateAction<
+      Prisma.BookGetPayload<{
+        include: { author: true; loans: true };
+      }>[]
+    >
+  >;
+}) {
   const [showForm, setShowForm] = useState(false);
   const form = useForm({
     defaultValues: {
@@ -32,6 +43,8 @@ export default function AddBook() {
         console.error('Failed to add book : ', data.error);
       } else {
         console.log('Book added successfully');
+        console.log('data', data);
+        setBooks((prev) => [...prev, data]);
         setShowForm(false);
       }
     },

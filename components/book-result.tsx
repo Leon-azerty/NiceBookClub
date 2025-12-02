@@ -1,17 +1,23 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Prisma } from '@/generated/prisma';
-import { useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import BookList from './book-list';
 
 export default function BookResult({
-  initialBooks,
+  books,
+  setBooks,
 }: {
-  initialBooks: Prisma.BookGetPayload<{
+  books: Prisma.BookGetPayload<{
     include: { author: true; loans: true };
   }>[];
+  setBooks: Dispatch<
+    SetStateAction<
+      Prisma.BookGetPayload<{
+        include: { author: true; loans: true };
+      }>[]
+    >
+  >;
 }) {
-  const [books, setBooks] = useState(initialBooks);
-
   return (
     <div>
       <h2 className="mb-4 text-lg font-semibold">Résultats ({books.length})</h2>

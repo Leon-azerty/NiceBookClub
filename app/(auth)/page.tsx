@@ -2,13 +2,13 @@ import { BookSearch } from '@/components/book-search';
 import { prisma } from '@/lib/prisma';
 
 export default async function Home() {
-  const books = await prisma.book.findMany({
+  const initialBooks = await prisma.book.findMany({
     include: { author: true, loans: true },
   });
 
   return (
     <main>
-      <BookSearch books={books} />
+      <BookSearch initialBooks={initialBooks} />
     </main>
   );
 }
