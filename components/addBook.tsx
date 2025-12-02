@@ -3,6 +3,7 @@
 import { useForm } from '@tanstack/react-form';
 import { CircleX } from 'lucide-react';
 import { useState } from 'react';
+import Spinner from './skeleton/spinner';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
@@ -56,7 +57,13 @@ export default function AddBook() {
             className="space-y-4"
           >
             {/* name */}
-            <form.Field name="name">
+            <form.Field
+              name="name"
+              validators={{
+                onChange: ({ value }) =>
+                  !value ? 'Champ obligatoire' : undefined,
+              }}
+            >
               {(field) => (
                 <div className="flex flex-col gap-1">
                   <Label>Name</Label>
@@ -75,7 +82,13 @@ export default function AddBook() {
             </form.Field>
 
             {/* genre */}
-            <form.Field name="genre">
+            <form.Field
+              name="genre"
+              validators={{
+                onChange: ({ value }) =>
+                  !value ? 'Champ obligatoire' : undefined,
+              }}
+            >
               {(field) => (
                 <div className="flex flex-col gap-1">
                   <Label>Genre</Label>
@@ -94,7 +107,13 @@ export default function AddBook() {
             </form.Field>
 
             {/* authorName */}
-            <form.Field name="authorName">
+            <form.Field
+              name="authorName"
+              validators={{
+                onChange: ({ value }) =>
+                  !value ? 'Champ obligatoire' : undefined,
+              }}
+            >
               {(field) => (
                 <div className="flex flex-col gap-1">
                   <Label>Auteur</Label>
@@ -118,7 +137,19 @@ export default function AddBook() {
           </form>
         </>
       ) : (
-        <Button onClick={() => setShowForm(true)}>Ajouter un livre ?</Button>
+        <Button
+          onClick={() => setShowForm(true)}
+          disabled={!form.state.isValid || form.state.isSubmitting}
+        >
+          {form.state.isSubmitting ? (
+            <>
+              Ajout...
+              <Spinner />
+            </>
+          ) : (
+            'Ajouter un livre ?'
+          )}
+        </Button>
       )}
     </div>
   );
