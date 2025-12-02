@@ -82,7 +82,7 @@ model Loan {
   userId   String
   bookId   String   @db.Uuid
   loanDate DateTime
-  book     Book     @relation(fields: [bookId], references: [id])
+  book     Book     @relation(fields: [bookId], references: [id], onDelete: Cascade)
   user     User     @relation(fields: [userId], references: [id])
 }
 

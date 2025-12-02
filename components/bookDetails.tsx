@@ -28,13 +28,17 @@ export default function BookDetails({
 }) {
   const [isButtonForLoanVisible, setIsButtonForLoanVisible] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [isDeletingLoading, setIsDeletingLoading] = useState(false);
   const deleteBook = async (bookId: string) => {
+    setIsDeletingLoading(true);
     const res = await fetch(`/api/books/${bookId}`, {
       method: 'DELETE',
     });
+    setIsDeletingLoading(false);
     if (!res.ok) {
       throw new Error('Erreur lors de la suppression du livre');
     }
+    setBooks((prev) => prev.filter((b) => b.id !== bookId));
   };
 
   const loanBook = async (bookId: string) => {
@@ -50,9 +54,9 @@ export default function BookDetails({
         userId: session.data?.user.id,
       }),
     });
+    setIsLoading(false);
 
     if (!res.ok) {
-      setIsLoading(false);
       throw new Error("Erreur lors de l'emprunt du livre");
     }
     const data = await res.json();
@@ -61,7 +65,6 @@ export default function BookDetails({
     );
 
     setIsButtonForLoanVisible(false);
-    setIsLoading(false);
   };
   return (
     <>
@@ -108,8 +111,13 @@ export default function BookDetails({
         </DialogDescription>
       </DialogHeader>
       <DialogFooter className="flex sm:justify-between">
-        <Button variant={'destructive'} onClick={() => deleteBook(book.id)}>
+        <Button
+          variant={'destructive'}
+          onClick={() => deleteBook(book.id)}
+          disabled={isDeletingLoading}
+        >
           Supprimer le livre
+          {isDeletingLoading && <Spinner />}
         </Button>
         <Button
           onClick={() => {
